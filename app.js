@@ -1,4 +1,5 @@
 //jshint esversion:6
+require("dotenv").config();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const express = require("express");
@@ -23,7 +24,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/userDB")
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: [true, "Please ente the user name!"]
+        required: [true, "Please enter the user name!"]
     },
     password: {
         type: String,
@@ -36,7 +37,7 @@ const userSchema = new mongoose.Schema({
 
 // const encKey = process.env.SOME_32BYTE_BASE64_STRING;
 // const sigKey = process.env.SOME_64BYTE_BASE64_STRING;
-const secret = "thisisourlittlesecret";
+const secret =  process.env.SECRET;
 userSchema.plugin(encrypt, { secret: secret, encryptedFields: ['password'] });
 // This adds _ct and _ac fields to the schema, as well as pre 'init' and pre 'save' middleware,
 // and encrypt, decrypt, sign, and authenticate instance methods
